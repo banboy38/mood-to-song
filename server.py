@@ -5,7 +5,7 @@ import random
 
 app = Flask(__name__)
 
-authorized = False
+authorized = True
 
 moods_to_music = {'anger': ['Get Turnt', 'Rock Hard'],
                 'contempt': ['Down in the Dumps', 'Most Necessary'],
