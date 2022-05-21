@@ -12,16 +12,29 @@ context.fillRect(0, 0, 800, 800);
 
 // ************************************* setup web cam ************************************* //
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
-
-if (navigator.getUserMedia) {       
-    navigator.getUserMedia({video: true}, handleVideo, videoError);
+if(navigator.mediaDevices.getUserMedia){
+    navigator.mediaDevices.getUserMedia({video : true})
+    .then(function(stream){
+        video.srcObject = stream;
+    })
+    .catch (function(error){
+        console.log("Something went wrong!");
+    })
+}
+else {
+    console.log("Browser doesn't support streaming!");
 }
 
-// handle video success
-function handleVideo(stream) {
-    video.src = window.URL.createObjectURL(stream);
-}
+// navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+
+// if (navigator.getUserMedia) {       
+//     navigator.getUserMedia({video: true}, handleVideo, videoError);
+// }
+
+// // handle video success
+// function handleVideo(stream) {
+//     video.src = window.URL.createObjectURL(stream);
+// }
 
 // handle video error
 function videoError(e) {
@@ -90,8 +103,8 @@ function ProcessEmotions(response)    {
         // calculate max emotion score and emotion
         for (var emotion in emotionScores) {
             emotionScore = emotionScores[emotion];
-            if (emotionScore >= maxEmotionScore) {
-                maxEmotionScore = emotionScore 
+            if (emotionScores >= maxEmotionScore) {
+                maxEmotionScore = emotionScores
                 maxEmotion = emotion
             }
         }
@@ -110,7 +123,7 @@ function getPlaylist(primaryMood) {
             $("#btn-playlist").text("PLAYLIST LINK");
             $("#playlist-link").css("display", "block");
     });
-    event.preventDefault();
+    preventDefault();
 }
 
 /**
